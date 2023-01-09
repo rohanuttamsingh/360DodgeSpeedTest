@@ -2,8 +2,10 @@
 
 ## Requirements
 
-Python 3.8.10
-TensorFlow 2.6.0
+* Python 3.8.10
+* TensorFlow 2.6.0
+* NumPy 1.21.4
+* H5py 3.1.0
 
 ## Instructions
 
