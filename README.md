@@ -9,7 +9,7 @@
 
 ## Instructions
 
-1. Unzip 'checkpoints.tar.gz' in 'checkpoints' directory
-1. Unzip 'val.tar.gz' in 'data' directory
-1. Run `./speed_test.py -checkpoint_path checkpoints/latest -data_path data/val'
+1. Unzip `checkpoints.tar.gz` in `checkpoints` directory
+1. Unzip `val.tar.gz` in `data` directory
+1. Run `./speed_test.py -checkpoint_path checkpoints/latest -data_path data/val`
 
