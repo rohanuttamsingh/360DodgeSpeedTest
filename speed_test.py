@@ -3,7 +3,7 @@ import argparse
 import os
 import tensorflow as tf
 from models import generate_model
-from data import dataset_generator, get_dataset_size
+from data import dataset_generator, get_dataset_size, get_dataset_in_memory
 from datetime import datetime
 
 parser = argparse.ArgumentParser()
@@ -14,13 +14,16 @@ args = parser.parse_args()
 model = generate_model()
 model.load_weights(args.checkpoint_path)
 
-ds = tf.data.Dataset.from_generator(
-    dataset_generator,
-    args=[args.data_path, '', False],
-    output_types=(tf.float32, tf.float32),
-    output_shapes=((228, 304, 8), (228, 304, 2))
-)
-ds_size = get_dataset_size(args.data_path, '')
+# ds = tf.data.Dataset.from_generator(
+#     dataset_generator,
+#     args=[args.data_path, '', False],
+#     output_types=(tf.float32, tf.float32),
+#     output_shapes=((228, 304, 8), (228, 304, 2))
+# )
+# ds_size = get_dataset_size(args.data_path, '')
+
+ds = get_dataset_in_memory(args.data_path, '', False)
+ds_size = len(ds)
 
 start_time = datetime.now()
 for input, target in ds.batch(1):

@@ -42,3 +42,13 @@ def dataset_generator(root_dir, split, shuffle):
 def get_dataset_size(root_dir, split):
     files = get_files(root_dir, split)
     return len(files)
+
+def get_dataset_in_memory(root_dir, split, shuffle):
+    files = get_files(root_dir, split)
+    if shuffle:
+        random.shuffle(files)
+    items = [get_item(file) for file in files]
+    inputs = [item[0] for item in items]
+    targets = [item[1] for item in items]
+    ds = tf.data.Dataset.from_tensor_slices((inputs, targets))
+    return ds
