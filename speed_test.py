@@ -3,7 +3,7 @@ import argparse
 import os
 import tensorflow as tf
 from models import generate_model
-from data import dataset_generator, get_dataset_size, get_dataset_in_memory
+from data import get_inputs_in_memory
 from datetime import datetime
 
 parser = argparse.ArgumentParser()
@@ -22,11 +22,15 @@ model.load_weights(args.checkpoint_path)
 # )
 # ds_size = get_dataset_size(args.data_path, '')
 
-ds = get_dataset_in_memory(args.data_path, '', False)
+# ds = get_dataset_in_memory(args.data_path, '', False)
+inputs = get_inputs_in_memory(args.data_path, '', False)
+inputs = [tf.expand_dims(input, axis=0) for input in inputs]
 ds_size = len(ds)
 
 start_time = datetime.now()
-for input, target in ds.batch(1):
+# for input, target in ds.batch(1):
+#     pred = model(input, training=False)
+for input in inputs:
     pred = model(input, training=False)
 end_time = datetime.now()
 

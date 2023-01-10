@@ -52,3 +52,10 @@ def get_dataset_in_memory(root_dir, split, shuffle):
     targets = [item[1] for item in items]
     ds = tf.data.Dataset.from_tensor_slices((inputs, targets))
     return ds
+
+def get_inputs_in_memory(root_dir, split, shuffle):
+    files = get_files(root_dir, split)
+    if shuffle:
+        random.shuffle(files)
+    inputs = [get_item(file)[0] for file in files]
+    return inputs
