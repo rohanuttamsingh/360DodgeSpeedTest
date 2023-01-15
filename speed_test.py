@@ -23,9 +23,10 @@ model.load_weights(args.checkpoint_path)
 # ds_size = get_dataset_size(args.data_path, '')
 
 # ds = get_dataset_in_memory(args.data_path, '', False)
+# ds_size = len(ds)
 inputs = get_inputs_in_memory(args.data_path, '', False)
 inputs = [tf.expand_dims(input, axis=0) for input in inputs]
-ds_size = len(ds)
+ds_size = len(inputs)
 
 start_time = datetime.now()
 # for input, target in ds.batch(1):
