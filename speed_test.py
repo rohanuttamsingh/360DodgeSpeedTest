@@ -23,7 +23,7 @@ elif args.model == 'even':
     model = generate_even_smaller_model(args.normalized)
 model.load_weights(args.checkpoint_path)
 
-inputs = get_inputs_in_memory(args.data_path, '', False, args.normalized, False)
+inputs = get_inputs_in_memory(args.data_path, 'val', False, args.normalized, False)
 inputs = [tf.expand_dims(input, axis=0) for input in inputs]
 ds_size = len(inputs)
 
