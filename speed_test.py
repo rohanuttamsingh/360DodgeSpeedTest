@@ -2,35 +2,32 @@
 import argparse
 import os
 import tensorflow as tf
-from models import generate_model
+from models import generate_s2d_model, generate_smaller_model, generate_even_smaller_model
 from data import get_inputs_in_memory
 from datetime import datetime
 
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+
 parser = argparse.ArgumentParser()
-parser.add_argument('-checkpoint_path', type=str, help='Path to model checkpoint')
-parser.add_argument('-data_path', type=str, help='Path to diretory with input files')
+parser.add_argument('-m', '--model', type=str, help='Options: s2d | smaller | even')
+parser.add_argument('-c', '--checkpoint_path', type=str, help='Path to model checkpoint')
+parser.add_argument('-d', '--data_path', type=str, help='Path to diretory with input files')
+parser.add_argument('-n', '--normalized', action='store_true', help='Set if the dataset is normalized')
 args = parser.parse_args()
 
-model = generate_model()
+if args.model == 's2d':
+    model = generate_s2d_model(args.normalized)
+elif args.model == 'smaller':
+    model = generate_smaller_model(args.normalized)
+elif args.model == 'even':
+    model = generate_even_smaller_model(args.normalized)
 model.load_weights(args.checkpoint_path)
 
-# ds = tf.data.Dataset.from_generator(
-#     dataset_generator,
-#     args=[args.data_path, '', False],
-#     output_types=(tf.float32, tf.float32),
-#     output_shapes=((228, 304, 8), (228, 304, 2))
-# )
-# ds_size = get_dataset_size(args.data_path, '')
-
-# ds = get_dataset_in_memory(args.data_path, '', False)
-# ds_size = len(ds)
-inputs = get_inputs_in_memory(args.data_path, '', False)
+inputs = get_inputs_in_memory(args.data_path, '', False, args.normalized, False)
 inputs = [tf.expand_dims(input, axis=0) for input in inputs]
 ds_size = len(inputs)
 
 start_time = datetime.now()
-# for input, target in ds.batch(1):
-#     pred = model(input, training=False)
 for input in inputs:
     pred = model(input, training=False)
 end_time = datetime.now()
