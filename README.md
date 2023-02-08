@@ -9,7 +9,9 @@
 
 ## Instructions
 
-1. Unzip `checkpoints.tar.gz` in `checkpoints` directory
-1. Unzip `val.tar.gz` in `data` directory
-1. Run `./speed_test.py -checkpoint_path checkpoints/latest -data_path data/val`
+1. Download the `checkpoints.tar.gz` file [here](https://drive.google.com/file/d/1A24q0726HSZw8tz1nbYeVA9arAAtJ-ku/view?usp=sharing) 
+1. Download the `data.tar.gz` file [here](https://drive.google.com/file/d/12TIkYaKux6Pfn0oQwr4bHxe9rLifOWF_/view?usp=sharing)
+1. Unzip both files into this directory with `tar -xzvf checkpoints.tar.gz` and `tar -xzvf data.tar.gz`
+1. Run `./speed_test.py -checkpoint_path checkpoints/smaller/latest.ckpt -data_path data/speed_test_data` and record the results
+1. Run `./speed_test.py -checkpoint_path checkpoints/even_smaller/latest.ckpt -data_path data/speed_test_data` and record the results
 
