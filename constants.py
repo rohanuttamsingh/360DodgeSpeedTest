@@ -1,5 +1,5 @@
-ROWS = 360
-COLS = 360
+ROWS = 320
+COLS = 320
 DATA_FORMAT = 'channels_last'
 CHANNEL_AXIS = 3
 # Make this the axis (or list of axes)

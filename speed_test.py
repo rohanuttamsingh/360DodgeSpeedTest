@@ -2,7 +2,19 @@
 import argparse
 import os
 import tensorflow as tf
-from models import generate_s2d_model, generate_smaller_model, generate_even_smaller_model, generate_tiny_model
+from models import (
+    generate_s2d_model,
+    generate_smaller_model,
+    generate_even_smaller_model,
+    generate_tiny_model,
+    generate_tinier_model,
+    generate_mobile_net,
+    generate_mobile_net_v2,
+    generate_small_mobile_net_v2,
+    generate_mini_mobile_net_v2,
+    generate_micro_mobile_net_v2,
+    generate_little_mobile_net_v2,
+)
 from data import get_inputs_in_memory
 from time import perf_counter
 
@@ -23,6 +35,20 @@ elif args.model == 'even':
     model = generate_even_smaller_model(args.normalized)
 elif args.model == 'tiny':
     model = generate_tiny_model(args.normalized)
+elif args.model == 'tinier':
+    model = generate_tinier_model(args.normalized)
+elif args.model == 'mn':
+    model = generate_mobile_net(args.normalized)
+elif args.model == 'mn2':
+    model = generate_mobile_net_v2(args.normalized)
+elif args.model == 'small_mn2':
+    model = generate_small_mobile_net_v2(args.normalized)
+elif args.model == 'mini_mn2':
+    model = generate_mini_mobile_net_v2(args.normalized)
+elif args.model == 'micro_mn2':
+    model = generate_micro_mobile_net_v2(args.normalized)
+elif args.model == 'little_mn2':
+    model = generate_little_mobile_net_v2(args.normalized)
 model.load_weights(args.checkpoint_path)
 
 inputs = get_inputs_in_memory(args.data_path, 'val', False, args.normalized, False)
