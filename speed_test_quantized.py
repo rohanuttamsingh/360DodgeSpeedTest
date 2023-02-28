@@ -17,16 +17,18 @@ args = parser.parse_args()
 interpreter = tf.lite.Interpreter(model_path=args.model_path)
 interpreter.allocate_tensors()
 
-input_index = interpreter.get_input_details()[0]["index"]
-output_index = interpreter.get_output_details()[0]["index"]
+input_details = interpreter.get_input_details()[0]
 
 inputs = get_inputs_in_memory(args.data_path, 'val', False, args.normalized, False)
-inputs = [np.expand_dims(input, axis=0).astype(np.float32) for input in inputs]
+if input_details['dtype'] == np.uint8:
+    input_scale, input_zero_point = input_details['quantization']
+    inputs = [input / input_scale + input_zero_point for input in inputs]
+inputs = [np.expand_dims(input, axis=0).astype(input_details['dtype']) for input in inputs]
 ds_size = len(inputs)
 
 start_time = perf_counter()
 for input in inputs:
-    interpreter.set_tensor(input_index, input)
+    interpreter.set_tensor(input_details['index'], input)
     interpreter.invoke()
 end_time = perf_counter()
 
